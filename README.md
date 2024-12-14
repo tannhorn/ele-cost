@@ -17,12 +17,14 @@ The data used for this project is sourced from the [IEA/OECD-NEA report](https:/
    ```bash
    git clone https://github.com/Tannhorn/ele-cost.git
    cd ele-cost
+   ```
 
 2. Install the required Python packages:
 
    ```bash
    pip install -r requirements.txt
+   ```
 
 ## Usage
 
-- Under construction
+See the `example.ipynb` notebook. You can run it locally or online for example in Google Colab: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/tannhorn/ele-cost/blob/main/example.ipynb)
