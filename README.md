@@ -27,4 +27,10 @@ The data used for this project is sourced from the [IEA/OECD-NEA report](https:/
 
 ## Usage
 
+### Notebook
+
 See the `example.ipynb` notebook. You can run it locally or online for example in Google Colab: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/tannhorn/ele-cost/blob/main/example.ipynb)
+
+### Applet
+
+The applet is deployed at ...
