@@ -37,7 +37,7 @@ See the `example.ipynb` notebook. You can run it locally or online for example i
 
 ### Applet
 
-You can run the applet locally or as it is deployed on the cloud.
+You can run the applet locally or deployed on the cloud.
 
 - To run it locally:
  ```bash
@@ -45,5 +45,5 @@ You can run the applet locally or as it is deployed on the cloud.
  ```
 This will start a local server. Open the link in your browser (usually `http://localhost:8501`).
 
-- To run it on the cloud, the applet is deployed at ...
+- The cloud deployment is not active at the moment.
 
