@@ -187,10 +187,27 @@ def main():
     # Initialize or retrieve session state for user data
     if "user_data_less" not in st.session_state:
         st.session_state.user_data_less = default_values.copy()
+
+    if "user_data_more" not in st.session_state:
         st.session_state.user_data_more = default_values.copy()
 
-    # Add a checkbox to show additional inputs
-    show_more = st.sidebar.checkbox("Show extra inputs")
+    # Ensure refresh_key exists in session state
+    if "refresh_key" not in st.session_state:
+        st.session_state.refresh_key = "0"
+
+    # Add a checkbox to show additional inputs and a button to reset values
+    show_more_col, reset_col = st.sidebar.columns([2, 1])
+    show_more = show_more_col.checkbox("Show extra inputs")
+    reset_clicked = reset_col.button("Reset")
+
+    if reset_clicked:
+        st.session_state.user_data_less = default_values.copy()
+        st.session_state.user_data_more = default_values.copy()
+        # Change widget keys to force refresh of number_input
+        st.session_state.refresh_key = str(int(st.session_state.refresh_key) + 1)
+        st.rerun()
+
+    # The sidebar inputs
     if not show_more:
         # Collect inputs from the user for basic inputs
         for category in basic_inputs:
@@ -202,7 +219,9 @@ def main():
                 ),
                 min_value=0 if value_type == int else 0.0,
                 step=step_values[category],
+                key=f"{category}_{st.session_state.refresh_key}",
             )
+
         # Preserve values for extra inputs without displaying them
         for category in extra_inputs:
             st.session_state.user_data_less[category] = (
@@ -222,6 +241,7 @@ def main():
                 ),
                 min_value=0 if value_type == int else 0.0,
                 step=step_values[category],
+                key=f"{category}_{st.session_state.refresh_key}",
             )
 
         # Create the chart
