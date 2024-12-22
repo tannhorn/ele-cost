@@ -160,7 +160,7 @@ def create_pie_chart(data):
     title = f"LCOE {lcoe:.0f} $/MWh"
 
     fig = go.Figure(data=[go.Pie(labels=labels, values=values)])
-    fig.update_layout(title_text=title, title_x=0.5, font=dict(size=16))
+    fig.update_layout(title_text=title, title_x=0.5, font={"size": 16})
 
     return fig
 
@@ -185,35 +185,49 @@ def main():
     st.sidebar.header("Input Parameters")
 
     # Initialize or retrieve session state for user data
-    if "user_data" not in st.session_state:
-        st.session_state.user_data = default_values.copy()
-
-    # Collect inputs from the user for basic inputs
-    for category in basic_inputs:
-        value_type = type(default_values[category])
-        st.session_state.user_data[category] = st.sidebar.number_input(
-            f"{data_labels[category]}:",
-            value=st.session_state.user_data.get(category, default_values[category]),
-            min_value=0 if value_type == int else 0.0,
-            step=step_values[category],
-        )
+    if "user_data_less" not in st.session_state:
+        st.session_state.user_data_less = default_values.copy()
+        st.session_state.user_data_more = default_values.copy()
 
     # Add a checkbox to show additional inputs
     show_more = st.sidebar.checkbox("Show extra inputs")
-    if show_more:
-        for category in extra_inputs:
+    if not show_more:
+        # Collect inputs from the user for basic inputs
+        for category in basic_inputs:
             value_type = type(default_values[category])
-            st.session_state.user_data[category] = st.sidebar.number_input(
+            st.session_state.user_data_less[category] = st.sidebar.number_input(
                 f"{data_labels[category]}:",
-                value=st.session_state.user_data.get(
+                value=st.session_state.user_data_more.get(
+                    category, default_values[category]
+                ),
+                min_value=0 if value_type == int else 0.0,
+                step=step_values[category],
+            )
+        # Preserve values for extra inputs without displaying them
+        for category in extra_inputs:
+            st.session_state.user_data_less[category] = (
+                st.session_state.user_data_more.get(category, default_values[category])
+            )
+
+        # Create the chart
+        pie_chart = create_pie_chart(st.session_state.user_data_less)
+    else:
+        # Collect inputs from the user for all inputs
+        for category in basic_inputs + extra_inputs:
+            value_type = type(default_values[category])
+            st.session_state.user_data_more[category] = st.sidebar.number_input(
+                f"{data_labels[category]}:",
+                value=st.session_state.user_data_less.get(
                     category, default_values[category]
                 ),
                 min_value=0 if value_type == int else 0.0,
                 step=step_values[category],
             )
 
-    # Create and display the chart
-    pie_chart = create_pie_chart(st.session_state.user_data)
+        # Create the chart
+        pie_chart = create_pie_chart(st.session_state.user_data_more)
+
+    # Display the chart
     st.plotly_chart(pie_chart)
 
 

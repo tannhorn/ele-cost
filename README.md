@@ -12,14 +12,18 @@ The data used for this project is sourced from the [IEA/OECD-NEA report](https:/
 
 ## Installation
 
-1. Clone the repository:
+1. Clone this repository:
 
    ```bash
    git clone https://github.com/Tannhorn/ele-cost.git
    cd ele-cost
    ```
 
-2. Install the required Python packages:
+1. Navigate to the project directory:
+    ```bash
+    cd ele-cost
+
+2. Install the required dependencies:
 
    ```bash
    pip install -r requirements.txt
@@ -33,4 +37,13 @@ See the `example.ipynb` notebook. You can run it locally or online for example i
 
 ### Applet
 
-The applet is deployed at ...
+You can run the applet locally or as it is deployed on the cloud.
+
+- To run it locally:
+ ```bash
+ streamlit run app.py
+ ```
+This will start a local server. Open the link in your browser (usually `http://localhost:8501`).
+
+- To run it on the cloud, the applet is deployed at ...
+
